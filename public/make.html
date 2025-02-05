@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <style>
+      * {
+        font-family: "Times New Roman", Times, serif;
+      }
+
+      body {
+        background-color: blanchedalmond;
+        border-left: .2vw solid black;
+        border-top: .2vw solid black;
+        border-right: .2vw solid black;
+        margin: 0%;
+      }
+
+      #div1 {
+        position: fixed;
+        display: flex;
+      }
+
+      #sidebar {
+        background-color: rgb(212, 76, 23);
+        height: fit-content;
+        width: 12vw;
+        border-right: .2vw solid black;
+        border-bottom: .2vw solid black;
+        border-left: .2vw solid black;
+        color: antiquewhite;
+        margin: 0%;
+        padding: 0%;
+        text-shadow: -1.3px -1.3px 0 #000, -1.3px -1.3px 0 #000,
+          -1.3px -1.3px 0 #000, -1.3px -1.3px 0 #000, -1.3px -1.3px 0 #000,
+          -1.3px -1.3px 0 #000, -1.3px -1.3px 0 #000;
+      }
+
+      a {
+        color: antiquewhite;
+        text-decoration: none;
+      }
+
+      .s {
+        text-decoration: none;
+        padding-top: 1.3vw;
+        padding-bottom: .4vw;
+        padding-left: 1.3vw;
+        border-top: .1vw solid rgb(158, 56, 8);
+        font-size: 1.6vw;
+      }
+
+      .TitleLib {
+        font-size: 1.8vw;
+        text-align: center;
+        margin-top: 2vw;
+
+      }
+      #searchbar {
+        height: 3.2vw;
+        width: 53.3vw;
+        border-left: .2vw solid black;
+        border-top: .2vw solid black;
+        border-bottom: .2vw solid black;
+        border-right: .1vw solid black;
+        border-top-left-radius: .8vw;
+        border-bottom-left-radius: .8vw;
+        margin-left: 60px;
+        margin-top: 1.2vw;
+        font-size: 1.6vw;
+      }
+      #searchbtn {
+        height: 3.2vw;
+        width: auto;
+        border: .2vw solid black;
+        border-top-right-radius: .8vw;
+        border-bottom-right-radius: .8vw;
+        margin-left: 0vw;
+        margin-top: 1.2vw;
+        font-size: 1.5vw;
+      }
+      #search {
+        display: flex;
+        width: 90vw;
+        height: 5.6vw;
+        border-bottom: .2vw solid black;
+        background-color: rgb(234, 90, 28);
+      }
+    </style>
+    <div id="div1">
+      <div id="sidebar">
+        <h1 class="TitleLib">Library <br>Management <br>System</h1>
+        <a href="/account"><h1 class="s"> Home </h1></a>
+        <a href=""><h1 class="s"> ADD Book </h1></a>
+        <a href=""><h1 class="s"> Delete Book </h1></a>
+        <a href=""><h1 class="s"> Update Book </h1></a>
+        <a href=""><h1 class="s"> User Login Approval </h1></a>
+        <a href=""><h1 class="s"> Logout </h1></a>
+        
+      </div>
+      <div id="search">
+        <input
+          type="Search"
+          id="searchbar"
+          placeholder="Search Books Here"
+        /><button id="searchbtn">Search</button>
+      </div>
+    </div>
+    <form action="/approveds" method="post">
+      <input type="text" name="regNo">
+      <input type="submit" value="Approved" class="btn1">
+    </form>
+  </body>
+</html>
+
+</body>
+</html>

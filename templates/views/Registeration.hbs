@@ -1,0 +1,262 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lodhi coding</title>
+    <style>
+      body{ 
+        background-image:url(./css/image/UAPLIB.jpg); 
+        background-repeat:no-repeat; 
+        background-size:cover;
+        text-align: center;
+        background-attachment:fixed;
+       }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    
+      
+    .full-page{ 
+        display:flex; 
+        width: 100%;  
+        justify-content:center;
+    }
+      
+    .input-field{ 
+        margin-top:1vw; 
+    } 
+    
+      
+    .check-box{ 
+        margin: 30px 12vw 34px 0; 
+    } 
+      
+    a{
+      text-decoration: none; 
+      color: palevioletred; 
+      font-size: 1vw; 
+    }
+      
+    #login-form{ 
+        display: block; 
+        width: auto; 
+        margin-top:7vw; 
+    }
+      
+    #register {
+      left:45vw; 
+    } 
+      
+    #login { 
+        left:3.5vw; 
+    } 
+      
+    span{ 
+        color:white; 
+        font-size:1.04vw;
+        bottom:5.34vw; 
+        right: 2vw; 
+        position: absolute; 
+    } 
+     
+    .submit-btn { 
+        width: 85%;
+        padding: 1vw 3vw; 
+        cursor: pointer; 
+        display: block; 
+        margin: 2vw 0vw 0vw 2vw;
+        background: #F3C693; 
+        border: 0; 
+        outline: .2vw solid black; 
+        border-radius:3vw; 
+    } 
+    
+    .input-field { 
+        width: 100%; 
+        padding:.6vw 0; 
+        margin:.6vw 0;
+        border:none;
+        border-bottom: 1.5px solid white;
+        outline:none; 
+        background: transparent; 
+        color:white;
+    } 
+    .input-field::placeholder{
+      color:white;
+    }
+    .input-group-register {
+        top: 8vw; 
+        position:absolute; 
+        width:22vw; 
+        transition:.5s; 
+    }
+      .input-group-login { 
+        top: 8vw; 
+        position:absolute; 
+        width:22vw;
+        transition:.5s; 
+    } 
+    
+    .toggle-btn { 
+        padding:.7vw 1.95vw .7vw 2.7vw;
+        cursor:pointer; 
+        background:transparent; 
+        border:0; 
+        outline: none; 
+        position: relative; 
+        font-size:1vw; 
+        color:white;
+    } 
+    #btn { 
+        top: 0; 
+        left:0; 
+        position: absolute;
+        width: 8.5vw; 
+        height: 100%; 
+        background: #F3C693; 
+        border-radius: 50vw;
+        transition: .5s;
+    } 
+    
+    .form-box { 
+        width:29vw; 
+        height:59vw; 
+        position:relative;
+        margin-left:2vw; 
+        background:rgba(0,0,0,0.5); 
+        padding:1vw; 
+        overflow:hidden; 
+        backdrop-filter:blur(3px);
+    } 
+    .button-box { 
+        width:17.8vw; 
+        margin:1.5vw 0px 0vw 4vw;
+        position:relative; 
+        box-shadow: 0 0 1.5vw .8vw #ff61241f; 
+        border-radius:2.5vw; 
+        background-color:rgba(57, 54, 54, 0.4);
+        backdrop-filter:blur(3px);
+    }
+    </style>
+
+  </head>
+  <body>
+
+    {{>header}}
+
+    <div class="full-page">
+
+      <div id="login-form" class="login-page">
+
+        <div class="form-box">
+
+          <div class="button-box">
+
+            <div id="btn"></div>
+
+            <button type="button" 
+                onclick="login()" 
+                class="toggle-btn"
+                id='adminbtn'
+                style='color:black;'
+                >Register<br/>As User
+            </button>
+            
+            <button type="button"
+              onclick="register()"
+              class="toggle-btn"
+              id='userbtn'
+            >Register<br />As Admin
+        </button>
+  
+        </div>
+  
+        <form
+            id="login"
+            class="input-group-login"
+            action="/registration"
+            method="post"
+          >
+  
+            <input type="text" class="input-field" placeholder="Enter Firstname" name="fname">
+            <input type="text" class="input-field" placeholder="Enter Lastname" name="lname">
+            <input type="number" class="input-field" placeholder="Enter Age" name="age">
+            <input type="email" class="input-field" placeholder="Enter Email" name="email">
+            <input type="number" class="input-field" placeholder="Enter Phone NO" name="phone">
+            <input type="text" class="input-field" placeholder="Enter Registration No" name="registrationNo">
+            <input type="number" class="input-field" placeholder="Enter Student Id" name="StudentId">
+            <input type="text" class="input-field" placeholder="Enter Department" name="Department">
+            <input type="text" class="input-field" placeholder="Enter Degree" name="Degree">
+            <input type="password" class="input-field" placeholder="Enter Password" name="password">
+            <input type="password" class="input-field" placeholder="Confirm Password" name="cpassword">
+
+
+            <input type="submit" class="submit-btn" value="Register" />
+  
+            </form>
+
+  
+            <form 
+            id="register" 
+            class="input-group-register"
+            action="/registeradmin"
+            method="post">
+
+            <input type="text" class="input-field" placeholder="Enter Firstname" name="fnamead">
+            <input type="text" class="input-field" placeholder="Enter Lastname" name="lnamead">
+            <input type="number" class="input-field" placeholder="Enter Age" name="agead">
+            <input type="email" class="input-field" placeholder="Enter Email" name="emailad">
+            <input type="number" class="input-field" placeholder="Enter Phone NO" name="phonead">
+            <input type="password" class="input-field" placeholder="Enter Password" name="passwordad">
+            <input type="password" class="input-field" placeholder="Confirm Password" name="cpasswordad">
+
+
+            <input type="submit" class="submit-btn" value="Register" />
+  
+        </form>
+  
+    </div>
+  
+</div>
+
+</div>
+
+<script>
+    var a=document.getElementById('adminbtn');
+    var b=document.getElementById('userbtn');
+
+    var x=document.getElementById('login'); 
+    
+    var y=document.getElementById('register'); 
+    
+    var z=document.getElementById('btn'); 
+    
+    function register() {
+
+        b.style.color='black';
+        a.style.color='white';
+
+        x.style.left='-35vw'; 
+    
+        y.style.left='3.5vw'; 
+
+        z.style.left='9.3vw'; 
+}
+    
+    function login() { 
+      b.style.color='white';
+      a.style.color='black';
+        
+        x.style.left='3.5vw'; 
+    
+        y.style.left='40vw';
+    
+        z.style.left='0px'
+}
+    
+</script>
+
+  </body>
+</html>

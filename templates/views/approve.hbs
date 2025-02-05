@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve User</title>
+  <style>
+    .main{
+      width: 96vw;
+      position: absolute;
+      margin:9.4vw 0vw 0vw 3.5vw;
+      color: white;
+      text-shadow: 1px 1px 1px black;
+
+      table{
+        width: 93%;
+        background-color: rgba(0, 0, 0, 0.8);
+        border-collapse: collapse;
+        border-spacing: 0;
+        text-algn: center;
+        border:1px solid white;
+        
+        th{
+          width:fit-content;
+          font-size: 1.3vw;
+          text-align: center;
+          border-bottom:.5px solid White;
+        }
+        td{
+          font-size: 1.1vw;
+          text-align: center;
+          padding: 1vw 0vw;
+        }
+      }
+  }
+  
+</style>
+<script>
+  async function sendH1Value() {
+      const h1Value = document.getElementById("h").textContent;
+
+      try {
+          const response = await fetch('/approveds', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ h1Value }),
+          });
+
+          const data = await response.json();
+          console.log('Server Response:', data);
+      } catch (error) {
+          console.error('Error sending data:', error);
+      }
+  }
+</script>
+</head>
+<body>
+
+    {{>Admin1}}
+
+          <div class="main">
+
+    
+            <table>
+              <tr>
+                <th>Registration No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Student ID</th>
+                <th>Semester</th>
+                <th>Degree</th>
+                <th>Status</th>
+                </tr>
+                {{#each approveuser}}
+                <tr>
+                  <td id="h">{{this.registrationNo}}</td>
+                  <td>{{this.firstname}} {{this.lastname}}</td>
+                  <td>{{this.email}}</td>
+                  <td>{{this.StudentId}}</td>
+                  <td>{{this.Semester}}</td>
+                  <td>{{this.Degree}}</td>
+                  <td><div class="divBtn">
+                    <button class="btn1" style="background-color: green;" onclick="sendH1Value()">Approved</button>
+                    <button class="btn2" style="background-color: red;">Reject</button>
+                  </div></td>
+                </tr>
+                {{/each}}
+            </table>
+          </div>
+</body>
+</html>

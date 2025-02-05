@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display User Data</title>
+  <style>
+    .main{
+      width: 100%;
+      position: absolute;
+      margin-top:6.4vw;
+  
+    .gridBox{
+      
+      display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding: 3vw 0vw 3vw 5vw;
+  gap:2vw;
+  width:20%;
+
+  div{
+    border-radius:10px;
+    background-color:rgba(0,0,0,0.8);
+  }
+      img{
+        width: 16vw;
+        height: 15vw;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      }
+      h1{
+        margin-left:1vw;
+        display: inline-block;
+        font-size: 1.1vw;
+        font-weight:600;
+        color:white;
+      }
+      b{
+        margin-left:1vw;
+        font-weight:600;
+        color:white;
+        font-size: 1.1vw;
+      }
+  
+    }
+    
+  
+  }
+</style>
+</head>
+<body>
+
+{{>sidebar}}
+
+
+          <div class="main">
+
+    
+            <div class="gridBox">
+              {{#each allbooks}}
+              <div>
+              <img src="./css/image/bookcover.webp" alt=""><br>
+              <b>Title:</b> <h1>{{this.Bookname}}</h1><br>
+              <b>ISBN:</b> <h1>{{this.ISBN}}</h1><br>
+              <b>Author:</b> <h1>{{this.Author}}</h1><br>
+              <b>Publisher:</b> <h1>{{this.Publisher}}</h1><br>
+              <b>Location:</b> <h1>{{this.Location}}</h1><br>
+              <b>Description:</b> <h1>{{this.Description}}</h1><br>
+              </div>
+                {{/each}}
+            </div>
+          </div>
+</body>
+</html>
