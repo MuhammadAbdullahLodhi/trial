@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const Library = require("../models/library");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 
 router.use(express.urlencoded ({ extended : true }) );
@@ -34,7 +35,18 @@ router.post("/registration", async (req,res) => {
                 createdAt : Date.now,
             })
         
+        // console.log("the success part" + registerUser);
+        const token = await registerUser.generateAuthToken();
+        // console.log("the token" + token);
+
+        res.cookie("jwt", token, {
+            expires:new Date(Date.now() + 30000),
+            httpOnly:true
+        })
+
         const registered = await registerUser.save();
+        // console.log("the page part" + registered);
+
         res.status(201).render("index");
         }
         else{
@@ -63,7 +75,16 @@ router.post("/User", async (req,res) => {
         const slicedStr = name.substring(0, 1);
         const slicedcap = slicedStr.toUpperCase();
         const isMatch = await bcrypt.compare(password, useremail.password);
+
+        
         if(isMatch){
+            const token = await useremail.generateAuthToken();
+            // console.log("the token part " + token);
+    
+            res.cookie("jwt", token, {
+                expires:new Date(Date.now() + 300000),
+                httpOnly:true
+            })
             if(useremail.isApproved==true){
             res.render("User",{text:`${slicedcap}`});
             }
@@ -72,7 +93,7 @@ router.post("/User", async (req,res) => {
             }
         }
         else{
-            res.send("user not found")
+            res.send("Password not Correct")
         }
 
     } catch (error) {

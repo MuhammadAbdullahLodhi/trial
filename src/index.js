@@ -1,6 +1,11 @@
+require("dotenv").config();
 const express = require("express");
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 3000;
 const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const auth = require("./middleware/auth");
+const authadmin = require("./middleware/authAdmin");
 
 require("./db/conn");
 
@@ -12,6 +17,8 @@ const libraryRouter1 = require("./routers/libadmin");
 // Admin database connection
 const Library1 = require("./models/library");
 const libraryRouter = require("./routers/lib");
+
+console.log(process.env.SECRET_KEY)
 
 // Addbook Connection
 const AddBookModel = require("./models/AddModel");
@@ -26,6 +33,7 @@ const app = express();
 const hbs = require("hbs");
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // console.log(__dirname)
@@ -56,36 +64,40 @@ app.get("/login", (req,res) => {
 app.get("/contact", (req,res) => {
     res.render("contact");
 });
-app.get("/User", (req,res) =>{
+app.get("/User" , auth , (req,res) =>{
     res.render("User");
 });
 
-app.get("/Admin", (req,res) =>{
+app.get("/Admin", authadmin , (req,res) =>{
     res.render("Admin");
 });
-app.get("/AddBook", (req,res) =>{
+app.get("/AddBook", authadmin , (req,res) =>{
     res.render("AddBook");
 });
-app.get("/delete", (req,res) =>{
+app.get("/delete", authadmin , (req,res) =>{
     res.render("delete");
 });
-app.get("/update", (req,res) =>{
+app.get("/update", authadmin , (req,res) =>{
     res.render("update");
 });
-app.get("/AllBooks", (req,res) =>{
+app.get("/AllBooks", authadmin , (req,res) =>{
     res.render("AllBooks");
 });
-app.get("/approve", (req,res) =>{
+app.get("/approve", authadmin , (req,res) =>{
     res.render("approve");
 });
-app.get("/approveds", (req,res) =>{
+app.get("/approveds", authadmin , (req,res) =>{
     res.render("approve");
 });
-app.get("/BKAllocatedUser", (req,res) =>{
+app.get("/BKAllocatedUser", authadmin , (req,res) =>{
     res.render("BKAllocatedUser");
 });
-app.get("/BookAllocate", (req,res) =>{
+app.get("/BookAllocate", authadmin , (req,res) =>{
     res.render("BookAllocate");
+});
+app.get("/AllBook" , authadmin , (req,res) =>{
+    console.log(`cookie is ${req.cookies.jwt}`);
+    res.render("AllBooksUser");
 });
 
 app.use(express.json());

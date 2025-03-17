@@ -2,7 +2,8 @@ const express = require("express");
 const router = new express.Router();
 const libraryRouter1 = require("../models/libraryadmin");
 const Library = require("../models/library");
-
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 router.use(express.urlencoded ({ extended : true }) );
 
@@ -17,23 +18,31 @@ router.post("/registeradmin", async (req,res) => {
         const cpassword = req.body.cpasswordad;
         
         if(password === cpassword){
-        lowfname = req.body.fnamead;
-        lowlname = req.body.lnamead;
-         
-        const registerUser = new libraryRouter1 ({
-            firstname : lowfname.toLowerCase(),
-            lastname : lowlname.toLowerCase(),
-            age: req.body.agead,
-            email : req.body.emailad,
-            phone : req.body.phonead,
-            password : req.body.passwordad,
-            confirmpassword : req.body.cpasswordad
+            lowfname = req.body.fnamead;
+            lowlname = req.body.lnamead;
+            const registerUser = new libraryRouter1 ({
+                firstname : lowfname.toLowerCase(),
+                lastname : lowlname.toLowerCase(),
+                age: req.body.agead,
+                email : req.body.emailad,
+                phone : req.body.phonead,
+                password : req.body.passwordad,
 
         })
     
+        const token = await registerUser.generateAuthToken();
+        // console.log("the token part " + token);
+
+        res.cookie("jwtadmin", token, {
+            expires:new Date(Date.now() + 30000),
+            httpOnly:true
+        })
+
     const registered = await registerUser.save();
-    res.status(201).render("index");
-}
+        // console.log("the page part" + registered);
+
+        res.status(201).render("index");
+    }
     else{
         res.send("password not matched");
     }
@@ -53,22 +62,30 @@ router.post("/Admin", async (req,res) => {
         
         const Adminemail = await libraryRouter1.findOne({email:email1});
         const name = Adminemail.firstname;
-const slicedStr = name.substring(0, 1);
-const slicedcap = slicedStr.toUpperCase();
 
-        if(Adminemail.password === password1 ){
-            res.render("Admin",{text:`${slicedcap}`});
+        const isMatch = await bcrypt.compare(password1, Adminemail.password);
+
+        const token = await Adminemail.generateAuthToken();
+        console.log("the token part " + token);
+
+        res.cookie("jwtadmin", token, {
+            expires:new Date(Date.now() + 300000),
+            httpOnly:true
+        })
+
+        if(isMatch){
+            res.render("Admin");
         }
         else{
             res.send("user not found")
         }
 
-    } catch (error) {
+            } catch (error) {
 
-        res.send(error);
+                res.send(error);
 
-    }
-})
+            }
+    })
 
 
 

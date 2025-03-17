@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/usersdata')
-.then( () => {
+const DB = 'mongodb+srv://abdullahlodhi656:abdullahlodhi123@cluster0.0z8lx.mongodb.net/usersdata?retryWrites=true&w=majority&appName=Cluster0';
+mongoose.connect(DB).then( () => {
     console.log("successfull connection");
 })
 .catch( (err) => {
