@@ -2,12 +2,20 @@ const express = require("express");
 const router = new express.Router();
 const AddBook = require("../models/AddModel");
 
+const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const auth = require("../middleware/auth");
+const authadmin = require("../middleware/authAdmin");
+
 
 router.use(express.urlencoded ({ extended : true }) );
 
 router.use(express.json());
 
-router.post("/upload", async (req,res) => {
+
+//Add Book Route
+router.post("/upload",authadmin, async (req,res) => {
     try{
             const Insert = new AddBook  ({
                 Bookname : req.body.BkName,
@@ -29,8 +37,8 @@ router.post("/upload", async (req,res) => {
 });
 
 
-
-router.post('/deletebook', async (req, res) => {
+//delete book route
+router.post('/deletebook', authadmin, async (req, res) => {
     try {
         const ISBN = req.body.isbna;
         const BkName = req.body.BName;
@@ -85,8 +93,8 @@ router.post('/deletebook', async (req, res) => {
 
 
 
-
-router.get('/ShowBooks', async (req,res) => {
+// show all books route
+router.get('/ShowBooks', authadmin, async (req,res) => {
     try{
         const allbooks = await AddBook.find();
         res.status(200).render("AllBooks", { allbooks });
@@ -95,7 +103,7 @@ router.get('/ShowBooks', async (req,res) => {
         res.status(500).send("Error fetching data");
     }
 })
-router.get('/AllBook', async (req,res) => {
+router.get('/AllBook', auth, async (req,res) => {
     try{
         const allbooks = await AddBook.find();
         res.status(200).render("AllBooksUser", { allbooks });
@@ -106,8 +114,8 @@ router.get('/AllBook', async (req,res) => {
 })
 
 
-
-router.get('/search', async (req,res) => {
+//search book route
+router.get('/search',  async (req,res) => {
     try{
         const Searchbooks = await AddBook.find({ Bookname: req.query.search })
         res.status(200).render("searchBook", { Searchbooks });

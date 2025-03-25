@@ -13,12 +13,11 @@ require("./db/conn");
 const Library = require("./models/libraryadmin");
 const libraryRouter1 = require("./routers/libadmin");
 
-
 // Admin database connection
 const Library1 = require("./models/library");
 const libraryRouter = require("./routers/lib");
 
-console.log(process.env.SECRET_KEY)
+console.log(process.env.SECRET_KEY);
 
 // Addbook Connection
 const AddBookModel = require("./models/AddModel");
@@ -37,67 +36,67 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // console.log(__dirname)
-const staticPath = path.join(__dirname,"../public");
-const templatePath = path.join(__dirname,"../templates/views");
-const partialsPath = path.join(__dirname,"../templates/partials");
+const staticPath = path.join(__dirname, "../public");
+const templatePath = path.join(__dirname, "../templates/views");
+const partialsPath = path.join(__dirname, "../templates/partials");
 
 app.use(express.static(staticPath));
 
-app.set("view engine" , "hbs");
-app.set("views" , templatePath);
+app.set("view engine", "hbs");
+app.set("views", templatePath);
 hbs.registerPartials(partialsPath);
 
-
-
-app.get( "/" , (req , res) => {
-   res.render("index")
-}); 
-app.get("/about" , (req , res) => {
-    res.render("about");
+app.get("/", (req, res) => {
+  res.render("index");
 });
-app.get("/Registeration" , (req , res) => {
-    res.render("Registeration");
+app.get("/about", (req, res) => {
+  res.render("about");
 });
-app.get("/login", (req,res) => {
-    res.render("login");
+app.get("/Registeration", (req, res) => {
+  res.render("Registeration");
 });
-app.get("/contact", (req,res) => {
-    res.render("contact");
+app.get("/login", (req, res) => {
+  res.render("login");
 });
-app.get("/User" , auth , (req,res) =>{
-    res.render("User");
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
+app.get("/User", auth, (req, res) => {
+  res.render("User");
 });
 
-app.get("/Admin", authadmin , (req,res) =>{
-    res.render("Admin");
+app.get("/Admin", authadmin, (req, res) => {
+  res.render("Admin");
 });
-app.get("/AddBook", authadmin , (req,res) =>{
-    res.render("AddBook");
+
+// app.get("/ShowBooks", authadmin, async (req, res) => {
+//     try {
+//         const allbooks = await AddBookModel.find({}); // Fetch books from MongoDB
+//         res.render("AllBooks", { allbooks }); // Pass books to template
+//     } catch (error) {
+//         console.error("Error fetching books:", error);
+//         res.status(500).send("Internal Server Error");
+//     }
+// });
+
+// app.get("/ShowBooks" , (req,res) =>{
+//     res.render("AllBooks");
+// });
+app.get("/AddBook", authadmin, (req, res) => {
+  res.render("AddBook");
 });
-app.get("/delete", authadmin , (req,res) =>{
-    res.render("delete");
+app.get("/delete", authadmin, (req, res) => {
+  res.render("delete");
 });
-app.get("/update", authadmin , (req,res) =>{
-    res.render("update");
+app.get("/update", authadmin, (req, res) => {
+  res.render("update");
 });
-app.get("/AllBooks", authadmin , (req,res) =>{
-    res.render("AllBooks");
+
+app.get("/BookAllocate", authadmin, (req, res) => {
+  res.render("BookAllocate");
 });
-app.get("/approve", authadmin , (req,res) =>{
-    res.render("approve");
-});
-app.get("/approveds", authadmin , (req,res) =>{
-    res.render("approve");
-});
-app.get("/BKAllocatedUser", authadmin , (req,res) =>{
-    res.render("BKAllocatedUser");
-});
-app.get("/BookAllocate", authadmin , (req,res) =>{
-    res.render("BookAllocate");
-});
-app.get("/AllBook" , authadmin , (req,res) =>{
-    console.log(`cookie is ${req.cookies.jwt}`);
-    res.render("AllBooksUser");
+app.get("/AllBooks", auth, (req, res) => {
+  res.render("AllBooks");
 });
 
 app.use(express.json());
@@ -108,5 +107,5 @@ app.use(AddBookRouter);
 app.use(BookAllocateRouter);
 
 app.listen(port, () => {
-    console.log(`listening to the port No  ${port}`)
+  console.log(`listening to the port No  ${port}`);
 });

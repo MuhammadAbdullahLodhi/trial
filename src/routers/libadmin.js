@@ -4,6 +4,9 @@ const libraryRouter1 = require("../models/libraryadmin");
 const Library = require("../models/library");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const auth = require("../middleware/auth");
+const authadmin = require("../middleware/authAdmin");
 
 router.use(express.urlencoded ({ extended : true }) );
 
@@ -34,7 +37,6 @@ router.post("/registeradmin", async (req,res) => {
         // console.log("the token part " + token);
 
         res.cookie("jwtadmin", token, {
-            expires:new Date(Date.now() + 30000),
             httpOnly:true
         })
 
@@ -66,10 +68,9 @@ router.post("/Admin", async (req,res) => {
         const isMatch = await bcrypt.compare(password1, Adminemail.password);
 
         const token = await Adminemail.generateAuthToken();
-        console.log("the token part " + token);
+        // console.log("the token part " + token);
 
         res.cookie("jwtadmin", token, {
-            expires:new Date(Date.now() + 300000),
             httpOnly:true
         })
 
@@ -89,8 +90,8 @@ router.post("/Admin", async (req,res) => {
 
 
 
-
-router.post('/approveds', async (req, res) => {
+//approving by admin route
+router.post('/approveds', authadmin, async (req, res) => {
     const {h1Value} = req.body;
   
     try {
@@ -108,8 +109,8 @@ router.post('/approveds', async (req, res) => {
 
 
 
-
-router.get('/showuser', async (req,res) => {
+//show all users route
+router.get('/showuser', authadmin, async (req,res) => {
     try{
         const approveuser = await Library.find({isApproved:false});
         res.status(200).render("approve", { approveuser });
