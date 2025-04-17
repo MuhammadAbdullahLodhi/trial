@@ -1,6 +1,10 @@
 const express = require("express");
 const router = new express.Router();
 const AddBook = require("../models/AddModel");
+const mongoose = require('mongoose');
+const multer = require('multer');
+const fs = require('fs');
+const path = require('path');
 
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
@@ -14,9 +18,14 @@ router.use(express.urlencoded ({ extended : true }) );
 router.use(express.json());
 
 
+// Multer setup
+const storage = multer.memoryStorage(); // <-- change this
+const upload = multer({ storage });
+
 //Add Book Route
-router.post("/upload",authadmin, async (req,res) => {
+router.post("/upload",authadmin, upload.single('image') , async (req,res) => {
     try{
+        const imgPath = req.file.path;
             const Insert = new AddBook  ({
                 Bookname : req.body.BkName,
                 ISBN : req.body.isbn,
@@ -25,7 +34,11 @@ router.post("/upload",authadmin, async (req,res) => {
                 Publisher : req.body.publisher,
                 Price : req.body.price,
                 Quantity : req.body.quantity,
-                Description : req.body.description
+                Description : req.body.description,
+                image: {
+                    data: req.file.buffer,
+                    contentType: req.file.mimetype
+                  }
             })
         
         const added = await Insert.save();
@@ -92,17 +105,45 @@ router.post('/deletebook', authadmin, async (req, res) => {
 // });
 
 
+router.get("/ShowBooks", async (req, res) => {
+    try {
+        const books = await AddBook.find();
+
+        const booksWithImages = books.map(books => {
+            const base64Image = books.image?.data?.toString('base64');
+            return {
+                _id: books._id,
+                Bookname: books.Bookname,
+                ISBN: books.ISBN,
+                Location: books.Location,
+                Author: books.Author,
+                Publisher: books.Publisher,
+                Price: books.Price,
+                Quantity: books.Quantity,
+                Description: books.Description,
+                image: base64Image ? `data:${books.image.contentType};base64,${base64Image}` : null
+            };
+        });
+
+        res.render("AllBooks", { books: booksWithImages });
+
+    } catch (err) {
+        res.status(500).send("Error fetching books: " + err.message);
+    }
+});
+
+
 
 // show all books route
-router.get('/ShowBooks', authadmin, async (req,res) => {
-    try{
-        const allbooks = await AddBook.find();
-        res.status(200).render("AllBooks", { allbooks });
-    }
-    catch (err) {
-        res.status(500).send("Error fetching data");
-    }
-})
+// router.get('/ShowBooks', authadmin, async (req,res) => {
+//     try{
+//         const allbooks = await AddBook.find();
+//         res.status(200).render("AllBooks", { allbooks });
+//     }
+//     catch (err) {
+//         res.status(500).send("Error fetching data");
+//     }
+// })
 router.get('/AllBook', auth, async (req,res) => {
     try{
         const allbooks = await AddBook.find();

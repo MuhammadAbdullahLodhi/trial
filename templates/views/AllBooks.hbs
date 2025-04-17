@@ -57,9 +57,13 @@
 
     
             <div class="gridBox">
-              {{#each allbooks}}
+              {{#each books}}
               <div>
-              <img src="./css/image/bookcover.webp" alt=""><br>
+                {{#if image}}
+                <img src="{{this.image}}" alt="Book Image" width="150" height="200" />
+              {{else}}  
+                <p>No image available</p>
+              {{/if}}
               <b>Title:</b> <h1>{{this.Bookname}}</h1><br>
               <b>ISBN:</b> <h1>{{this.ISBN}}</h1><br>
               <b>Author:</b> <h1>{{this.Author}}</h1><br>

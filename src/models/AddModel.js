@@ -36,7 +36,11 @@ const AddSchema = new mongoose.Schema
     Description : {
         type : String,
         required : true
-    }
+    },
+    image: {
+        data: Buffer,
+        contentType: String
+      }
     // Image : {
     //     type : String,
     //     required : true

@@ -10,7 +10,7 @@
 
   <body>
     {{>Admin1}}
-    <form action="/upload" method="post" class="addbookform">
+    <form action="/upload" method="post" class="addbookform" enctype="multipart/form-data">
       BookName : &nbsp&nbsp&nbsp&nbsp <input type="text" name="BkName" class="inputadd"> <br><br>
       ISBN : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type="number" class="inputadd" name="isbn"><br><br>
       Location :&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type="text" class="inputadd" name="location"><br><br>
@@ -19,6 +19,7 @@
       price :&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type="number" class="inputadd" name="price"><br><br>
       quantity : &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type="number" class="inputadd" name="quantity"><br><br>
       Description :&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type="text" class="inputadd" name="description"><br><br>
+      Image : <input type="file" name="image" required><br><br>
       <input type="submit" value="Submit" class="inputadd" style="border:1.6px solid white; background-color:white; color:black; margin-left:4vw; font-weight:600;text-shadow: 2px 2px 2px white;">
     </form>
   </body>
