@@ -63,9 +63,9 @@ router.post("/Admin", async (req,res) => {
         const password1 = req.body.passwordad;
         
         const Adminemail = await libraryRouter1.findOne({email:email1});
-        const name = Adminemail.firstname;
 
-        const isMatch = await bcrypt.compare(password1, Adminemail.password);
+        if (Adminemail) {
+            const isMatch = await bcrypt.compare(password1, Adminemail.password);
 
         const token = await Adminemail.generateAuthToken();
         // console.log("the token part " + token);
@@ -77,8 +77,12 @@ router.post("/Admin", async (req,res) => {
         if(isMatch){
             res.render("Admin");
         }
+        else {
+            res.render("login", { showModal: true, message: "Password not correct" });
+          }
+        }
         else{
-            res.send("user not found")
+            res.render("login", { showModal: true, message: "User Not Found" });
         }
 
             } catch (error) {

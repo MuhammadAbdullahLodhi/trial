@@ -40,6 +40,10 @@ const AddSchema = new mongoose.Schema
     image: {
         data: Buffer,
         contentType: String
+      },
+    pdf: {
+        data: Buffer,
+        contentType: String
       }
     // Image : {
     //     type : String,

@@ -62,10 +62,6 @@ router.post("/User", async (req, res) => {
     const password = req.body.password;
 
     const useremail = await Library.findOne({ email: email });
-    const name = useremail.firstname;
-
-    const slicedStr = name.substring(0, 1);
-    const slicedcap = slicedStr.toUpperCase();
     const isMatch = await bcrypt.compare(password, useremail.password);
 
     if (isMatch) {
@@ -76,12 +72,12 @@ router.post("/User", async (req, res) => {
         httpOnly: true,
       });
       if (useremail.isApproved == true) {
-        res.render("User", { text: `${slicedcap}` });
+        res.render("User");
       } else {
         res.send("Your account is not approved by admin");
       }
     } else {
-      res.send("Password not Correct");
+      res.render("login", { showModal: true, message: "Password not correct" });
     }
   } catch (error) {
     res.send(error);

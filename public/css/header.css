@@ -18,7 +18,15 @@
     }
     .navBar-items{
         font-size: 1.2vw;
-        margin-left: 2vw;
+        margin-left: 2.5vw;
         color: aliceblue;
         text-shadow: 1px 1px 1px black;
+    }
+    .logo{
+        width: 17vw;
+        height: 5vw;
+        padding: 0;
+        margin: 0;
+        margin: 0vw 36vw 0vw 2vw;
+        border-radius: 10px;
     }

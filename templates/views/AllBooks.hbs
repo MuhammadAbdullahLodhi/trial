@@ -70,6 +70,9 @@
               <b>Publisher:</b> <h1>{{this.Publisher}}</h1><br>
               <b>Location:</b> <h1>{{this.Location}}</h1><br>
               <b>Description:</b> <h1>{{this.Description}}</h1><br>
+              {{#if this.pdf}}
+      <a href="{{this.pdf}}" download="{{this.Bookname}}.pdf">Download PDF</a>
+    {{/if}}
               </div>
                 {{/each}}
             </div>
