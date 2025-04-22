@@ -36,25 +36,28 @@
   
 </style>
 <script>
-  async function sendH1Value() {
-      const h1Value = document.getElementById("h").textContent;
-
+  async function sendH1Value(registrationNo) {
       try {
           const response = await fetch('/approveds', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ h1Value }),
+              body: JSON.stringify({ registrationNo }), // ← make sure this is what your backend expects
           });
+
+          if (!response.ok) throw new Error('Failed to send');
 
           const data = await response.json();
           console.log('Server Response:', data);
+          alert("User approved successfully!"); // Optional
       } catch (error) {
           console.error('Error sending data:', error);
+          alert("Something went wrong");
       }
   }
 </script>
+
 </head>
 <body>
 
@@ -74,19 +77,21 @@
                 <th>Status</th>
                 </tr>
                 {{#each approveuser}}
-                <tr>
-                  <td id="h">{{this.registrationNo}}</td>
-                  <td>{{this.firstname}} {{this.lastname}}</td>
-                  <td>{{this.email}}</td>
-                  <td>{{this.StudentId}}</td>
-                  <td>{{this.Semester}}</td>
-                  <td>{{this.Degree}}</td>
-                  <td><div class="divBtn">
-                    <button class="btn1" style="background-color: green;" onclick="sendH1Value()">Approved</button>
-                    <button class="btn2" style="background-color: red;">Reject</button>
-                  </div></td>
-                </tr>
-                {{/each}}
+<tr>
+  <td>{{this.registrationNo}}</td>
+  <td>{{this.firstname}} {{this.lastname}}</td>
+  <td>{{this.email}}</td>
+  <td>{{this.StudentId}}</td>
+  <td>{{this.Semester}}</td>
+  <td>{{this.Degree}}</td>
+  <td>
+    <div class="divBtn">
+      <button class="btn1" style="background-color: green;" onclick="sendH1Value('{{this.registrationNo}}')">Approved</button>
+      <button class="btn2" style="background-color: red;">Reject</button>
+    </div>
+  </td>
+</tr>
+{{/each}}
             </table>
           </div>
 </body>

@@ -1,81 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Display User Data</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Display User Data</title>
   <style>
-    .main{
-      width: 100%;
-      position: absolute;
-      margin-top:6.4vw;
-  
-    .gridBox{
-      
-      display:grid;
-  grid-template-columns:repeat(5,1fr);
-  padding: 3vw 0vw 3vw 5vw;
-  gap:2vw;
-  width:20%;
-
-  div{
-    border-radius:10px;
-    background-color:rgba(0,0,0,0.8);
-  }
-      img{
-        width: 16vw;
-        height: 15vw;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-      }
-      h1{
-        margin-left:1vw;
-        display: inline-block;
-        font-size: 1.1vw;
-        font-weight:600;
-        color:white;
-      }
-      b{
-        margin-left:1vw;
-        font-weight:600;
-        color:white;
-        font-size: 1.1vw;
-      }
-  
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    
-  
-  }
-</style>
+
+    body {
+      background-color: #f2f2f2;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Assume your sidebar/nav is fixed or sticky */
+    .main {
+      width: 100%;
+      position: relative;
+      margin-top: 5vw; /* Reduce top margin */
+      padding: 2vw;
+    }
+
+    .gridBox {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2vw;
+    }
+
+    .gridBox div {
+      border-radius: 10px;
+      background-color: rgba(0, 0, 0, 0.85);
+      padding: 1vw;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .gridBox div:hover {
+      transform: translateY(-5px);
+    }
+
+    .gridBox img {
+      width: 100%;
+      height: 200px; /* You can adjust this height as needed */
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      object-fit: cover; /* Ensures image fills container and stays uniform */
+      margin-bottom: 1vw;
+    }
+
+    .gridBox b {
+      display: block;
+      font-weight: 600;
+      color: #00e0ff;
+      margin-top: 0.5vw;
+      font-size: 0.95rem;
+    }
+
+    .gridBox h1 {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: white;
+      margin: 0.3vw 0 0.6vw 0;
+    }
+
+    .gridBox a {
+      display: inline-block;
+      margin-top: 1vw;
+      background-color: #00c6ff;
+      color: white;
+      text-decoration: none;
+      padding: 0.4vw 0.8vw;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .gridBox a:hover {
+      background-color: #0099cc;
+    }
+
+    @media screen and (max-width: 768px) {
+      .gridBox h1,
+      .gridBox b {
+        font-size: 0.9rem;
+      }
+
+      .gridBox a {
+        font-size: 0.85rem;
+        padding: 0.5vw 1vw;
+      }
+
+      .gridBox img {
+        max-height: 160px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .main {
+        margin-top: 12vw;
+        padding: 5vw;
+      }
+
+      .gridBox {
+        grid-template-columns: 1fr;
+      }
+
+      .gridBox h1,
+      .gridBox b,
+      .gridBox a {
+        font-size: 1rem;
+      }
+
+      .gridBox img {
+        max-height: 150px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-{{>sidebar}}
+  {{>sidebar}}
 
-
-<div class="main">
-
-    
-  <div class="gridBox">
-    {{#each books}}
-    <div>
-      {{#if image}}
-      <img src="{{this.image}}" alt="Book Image" width="150" height="200" />
-    {{else}}  
-      <p>No image available</p>
-    {{/if}}
-    <b>Title:</b> <h1>{{this.Bookname}}</h1><br>
-    <b>ISBN:</b> <h1>{{this.ISBN}}</h1><br>
-    <b>Author:</b> <h1>{{this.Author}}</h1><br>
-    <b>Publisher:</b> <h1>{{this.Publisher}}</h1><br>
-    <b>Location:</b> <h1>{{this.Location}}</h1><br>
-    <b>Description:</b> <h1>{{this.Description}}</h1><br>
-    {{#if this.pdf}}
-<a href="{{this.pdf}}" download="{{this.Bookname}}.pdf">Download PDF</a>
-{{/if}}
-    </div>
+  <div class="main">
+    <div class="gridBox">
+      {{#each books}}
+      <div>
+        {{#if image}}
+        <img src="{{this.image}}" alt="Book Image" />
+        {{else}}  
+        <p>No image available</p>
+        {{/if}}
+        <b>Title:</b>
+        <h1>{{this.Bookname}}</h1>
+        <b>ISBN:</b>
+        <h1>{{this.ISBN}}</h1>
+        <b>Author:</b>
+        <h1>{{this.Author}}</h1>
+        <b>Publisher:</b>
+        <h1>{{this.Publisher}}</h1>
+        <b>Location:</b>
+        <h1>{{this.Location}}</h1>
+        <b>Description:</b>
+        <h1>{{this.Description}}</h1>
+        {{#if this.pdf}}
+        <a href="{{this.pdf}}" download="{{this.Bookname}}.pdf">Download PDF</a>
+        {{/if}}
+      </div>
       {{/each}}
+    </div>
   </div>
-</div>
+
 </body>
 </html>

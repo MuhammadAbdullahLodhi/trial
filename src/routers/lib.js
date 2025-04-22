@@ -56,6 +56,9 @@ router.post("/registration", async (req, res) => {
 
 //This is Login Method
 
+const cookieParser = require("cookie-parser"); // add this at the top
+router.use(cookieParser());
+
 router.post("/User", async (req, res) => {
   try {
     const email = req.body.email;
@@ -65,13 +68,11 @@ router.post("/User", async (req, res) => {
     const isMatch = await bcrypt.compare(password, useremail.password);
 
     if (isMatch) {
-      const token = await useremail.generateAuthToken();
-      // console.log("the token part " + token);
-
-      res.cookie("jwt", token, {
-        httpOnly: true,
-      });
       if (useremail.isApproved == true) {
+        // Set registrationNo in cookie
+        res.cookie("regNo", useremail.registrationNo, {
+          httpOnly: true
+        });
         res.render("User");
       } else {
         res.send("Your account is not approved by admin");
@@ -83,5 +84,6 @@ router.post("/User", async (req, res) => {
     res.send(error);
   }
 });
+
 
 module.exports = router;

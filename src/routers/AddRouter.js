@@ -179,7 +179,7 @@ router.get("/AllBook", async (req, res) => {
       };
     });
 
-    res.render("AllBooks", { books: booksWithImages });
+    res.render("AllBooksUser", { books: booksWithImages });
   } catch (err) {
     res.status(500).send("Error fetching books: " + err.message);
   }
@@ -189,7 +189,30 @@ router.get("/AllBook", async (req, res) => {
 router.get("/search", async (req, res) => {
   try {
     const Searchbooks = await AddBook.find({ Bookname: req.query.search });
-    res.status(200).render("searchBook", { Searchbooks });
+
+    const booksWithImages = Searchbooks.map((Searchbooks) => {
+      const imageBase64 = Searchbooks.image?.data?.toString("base64");
+      const pdfBase64 = Searchbooks.pdf?.data?.toString("base64");
+    return {
+      _id: Searchbooks._id,
+      Bookname: Searchbooks.Bookname,
+      ISBN: Searchbooks.ISBN,
+      Location: Searchbooks.Location,
+      Author: Searchbooks.Author,
+      Publisher: Searchbooks.Publisher,
+      Price: Searchbooks.Price,
+      Quantity: Searchbooks.Quantity,
+      Description: Searchbooks.Description,
+      image: imageBase64
+          ? `data:${Searchbooks.image.contentType};base64,${imageBase64}`
+          : null,
+      pdf: pdfBase64
+          ? `data:${Searchbooks.pdf.contentType};base64,${pdfBase64}`
+          : null
+    };
+  });
+
+    res.status(200).render("searchBook", { Searchbooks : booksWithImages });
   } catch (err) {
     res.status(500).send("Error fetching data");
   }

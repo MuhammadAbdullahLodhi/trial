@@ -96,19 +96,23 @@ router.post("/Admin", async (req,res) => {
 
 //approving by admin route
 router.post('/approveds', authadmin, async (req, res) => {
-    const {h1Value} = req.body;
+    const { registrationNo } = req.body; // <-- Destructure properly
   
     try {
       // Update the user to set isApproved to true
       const approval = await Library.updateOne(
-        { registrationNo: h1Value },
+        { registrationNo: registrationNo },
         { $set: { isApproved: true } }
       );
-      res.render("approve");
+  
+      // You can choose to send a response back to the frontend
+      res.json({ success: true, message: 'User approved successfully', result: approval });
     } catch (error) {
+      console.error(error);
       res.status(500).json({ error: 'Error approving user.' });
     }
   });
+  
 
 
 

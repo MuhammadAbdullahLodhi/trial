@@ -39,30 +39,28 @@
 </head>
 <body>
 
-    {{>sidebar}}
+    {{>Admin1}}
 
           <div class="main">
 
     
             <table>
               <tr>
-                <th>Book Name</th>
-                <th>ISBN</th>
-                <th>Author</th>
-                <th>Issue Date</th>
-                <th>Return Date</th>
-                <th>Fine for Late</th>
-                <th>Days Late</th>
+                <th>Student Name </th>
+                <th>Email</th>
+                <th>Reg-No</th>
+                <th>STD-ID</th>
+                <th>Department</th>
+                <th>Degree</th>
                 </tr>
-                {{#each Borrowbook}}
+                {{#each std}}
                 <tr>
-                  <td id="h">{{this.Bookname}}</td>
-                  <td>{{this.ISBN}}</td>
-                  <td>{{this.Author}}</td>
-                  <td>{{this.IssueDate}}</td>
-                  <td>{{this.ReturnDate}}</td>
-                  <td>{{this.FineForLate}}</td>
-                  <td>{{this.lateDays}}</td>
+                  <td id="h">{{this.firstname}} {{this.lastname}}</td>
+                  <td>{{this.email}}</td>
+                  <td>{{this.registrationNo}}</td>
+                  <td>{{this.StudentId}}</td>
+                  <td>{{this.Department}}</td>
+                  <td>{{this.Degree}}</td>
                 </tr>
                 {{/each}}
             </table>

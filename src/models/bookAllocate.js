@@ -48,7 +48,15 @@ const BookAllocateSchema = new mongoose.Schema
     ReturnDate : {
         type : String,
         required : true
-    }
+    },
+    lateDays: {
+        type: Number,
+        default: 0
+      },
+    FineForLate: {
+        type: Number,
+        default: 0
+      }
 })
 
 

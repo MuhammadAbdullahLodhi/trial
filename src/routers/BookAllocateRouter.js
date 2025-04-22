@@ -39,14 +39,29 @@ router.post("/BookAllocate", authAdmin, async (req, res) => {
 
 //user Borrow page route
 
-router.get("/BKAllocateUser", auth, async (req, res) => {
+router.get("/BKAllocateUser", async (req, res) => {
   try {
-    const Borrowbook = await BookAllocate.find();
-    res.status(200).render("BKAllocatedUser", { Borrowbook });
+    const regNo = req.cookies.regNo; // ✅ reading cookie here
+
+    if (!regNo) return res.status(400).send("Registration number not found in cookies");
+
+    const Borrowbook = await BookAllocate.find({ RegistrationNo: regNo });
+
+    res.status(200).render("BKAllocatedUser", { Borrowbook, regNo });
   } catch (err) {
     res.status(500).send("Error fetching data");
   }
 });
+
+router.get("/allAllocatedBooks", authAdmin, async (req, res) => {
+  try {
+    const allocatedBooks = await BookAllocate.find();
+    res.status(200).render("AllAllocatedBooks", { allocatedBooks });
+  } catch (err) {
+    res.status(500).send("Error fetching data");
+  }
+});
+
 
 // const users = await User.find();
 

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const auth = require("./middleware/auth");
 const authadmin = require("./middleware/authAdmin");
+const cron = require("node-cron");
 
 require("./db/conn");
 
@@ -26,6 +27,9 @@ const AddBookRouter = require("./routers/AddRouter");
 //BookAllocate Connection
 const BookAllocate = require("./models/bookAllocate");
 const BookAllocateRouter = require("./routers/BookAllocateRouter");
+
+// students route connection
+const AllStudentsRouter = require("./routers/AllStudentsRouter");
 
 const path = require("path");
 const app = express();
@@ -69,19 +73,7 @@ app.get("/Admin", authadmin, (req, res) => {
   res.render("Admin");
 });
 
-// app.get("/ShowBooks", authadmin, async (req, res) => {
-//     try {
-//         const allbooks = await AddBookModel.find({}); // Fetch books from MongoDB
-//         res.render("AllBooks", { allbooks }); // Pass books to template
-//     } catch (error) {
-//         console.error("Error fetching books:", error);
-//         res.status(500).send("Internal Server Error");
-//     }
-// });
 
-// app.get("/ShowBooks" , (req,res) =>{
-//     res.render("AllBooks");
-// });
 app.get("/AddBook", authadmin, (req, res) => {
   res.render("AddBook");
 });
@@ -98,6 +90,43 @@ app.get("/BookAllocate", authadmin, (req, res) => {
 app.get("/AllBooks", auth, (req, res) => {
   res.render("AllBooks");
 });
+app.get("/AllStudents", authadmin, (req, res) => {
+  res.render("AllStudents");
+});
+
+
+
+cron.schedule("*/10 * * * *", async () => {
+  try {
+    const today = new Date();
+    const books = await BookAllocate.find();
+
+    for (let book of books) {
+      const returnDate = new Date(book.ReturnDate);
+
+      if (!isNaN(returnDate)) {
+        const daysLate = today > returnDate
+          ? Math.floor((today - returnDate) / (1000 * 60 * 60 * 24))
+          : 0;
+
+        await BookAllocate.updateOne(
+          { _id: book._id },
+          { $set: { lateDays: daysLate } }
+        );
+        const fine = daysLate * 10; // Assuming a fine of 10 units per day
+        await BookAllocate.updateOne(
+          { _id: book._id },
+          { $set: { FineForLate: fine } }
+        );
+      }
+    }
+
+    console.log("lateDays updated successfully");
+  } catch (error) {
+    console.error("Error updating lateDays:", error);
+  }
+});
+
 
 app.use(express.json());
 
@@ -105,6 +134,7 @@ app.use(libraryRouter1);
 app.use(libraryRouter);
 app.use(AddBookRouter);
 app.use(BookAllocateRouter);
+app.use(AllStudentsRouter);
 
 app.listen(port, () => {
   console.log(`listening to the port No  ${port}`);
