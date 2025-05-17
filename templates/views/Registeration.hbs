@@ -1,262 +1,205 @@
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Lodhi coding</title>
-    <style>
-      body{ 
-        background-image:url(./css/image/UAPLIB.jpg); 
-        background-repeat:no-repeat; 
-        background-size:cover;
-        text-align: center;
-        background-attachment:fixed;
-       }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+<head>
+  <meta charset="UTF-8" />
+  <title>Lodhi Coding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
+    body {
+      background: url(./css/image/UAPLIB.jpg) no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-box {
+      width: 100%;
+      max-width: 550px;
+      background: rgba(0, 0, 0, .3);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      position: relative;
+      overflow: hidden;
+      margin-top: 7vw; /* 👈 Move the form down */
+    }
     
-      
-    .full-page{ 
-        display:flex; 
-        width: 100%;  
-        justify-content:center;
+
+    .button-box {
+      display: flex;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.15);
+      border-radius: 2rem;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 2rem;
+      height: 50px;
     }
-      
-    .input-field{ 
-        margin-top:1vw; 
-    } 
-    
-      
-    .check-box{ 
-        margin: 30px 12vw 34px 0; 
-    } 
-      
-    a{
-      text-decoration: none; 
-      color: palevioletred; 
-      font-size: 1vw; 
+
+    .toggle-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      z-index: 2;
+      position: relative;
+      transition: color 0.3s ease;
     }
-      
-    #login-form{ 
-        display: block; 
-        width: auto; 
-        margin-top:7vw; 
+
+    #btn {
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      background: #F3C693;
+      border-radius: 2rem;
+      transition: 0.4s ease;
+      z-index: 1;
     }
-      
-    #register {
-      left:45vw; 
-    } 
-      
-    #login { 
-        left:3.5vw; 
-    } 
-      
-    span{ 
-        color:white; 
-        font-size:1.04vw;
-        bottom:5.34vw; 
-        right: 2vw; 
-        position: absolute; 
-    } 
-     
-    .submit-btn { 
-        width: 85%;
-        padding: 1vw 3vw; 
-        cursor: pointer; 
-        display: block; 
-        margin: 2vw 0vw 0vw 2vw;
-        background: #F3C693; 
-        border: 0; 
-        outline: .2vw solid black; 
-        border-radius:3vw; 
-    } 
-    
-    .input-field { 
-        width: 100%; 
-        padding:.6vw 0; 
-        margin:.6vw 0;
-        border:none;
-        border-bottom: 1.5px solid white;
-        outline:none; 
-        background: transparent; 
-        color:white;
-    } 
-    .input-field::placeholder{
-      color:white;
+
+    form {
+      display: none;
+      flex-direction: column;
+      gap: 1.2rem;
     }
-    .input-group-register {
-        top: 8vw; 
-        position:absolute; 
-        width:22vw; 
-        transition:.5s; 
+
+    form.active {
+      display: flex;
+      animation: fadeIn 0.4s ease-in-out;
     }
-      .input-group-login { 
-        top: 8vw; 
-        position:absolute; 
-        width:22vw;
-        transition:.5s; 
-    } 
-    
-    .toggle-btn { 
-        padding:.7vw 1.95vw .7vw 2.7vw;
-        cursor:pointer; 
-        background:transparent; 
-        border:0; 
-        outline: none; 
-        position: relative; 
-        font-size:1vw; 
-        color:white;
-    } 
-    #btn { 
-        top: 0; 
-        left:0; 
-        position: absolute;
-        width: 8.5vw; 
-        height: 100%; 
-        background: #F3C693; 
-        border-radius: 50vw;
-        transition: .5s;
-    } 
-    
-    .form-box { 
-        width:29vw; 
-        height:59vw; 
-        position:relative;
-        margin-left:2vw; 
-        background:rgba(0,0,0,0.5); 
-        padding:1vw; 
-        overflow:hidden; 
-        backdrop-filter:blur(3px);
-    } 
-    .button-box { 
-        width:17.8vw; 
-        margin:1.5vw 0px 0vw 4vw;
-        position:relative; 
-        box-shadow: 0 0 1.5vw .8vw #ff61241f; 
-        border-radius:2.5vw; 
-        background-color:rgba(57, 54, 54, 0.4);
-        backdrop-filter:blur(3px);
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    </style>
 
-  </head>
-  <body>
+    .input-field {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+      padding: 0.8rem 0;
+      font-size: 1rem;
+      color: white;
+      width: 100%;
+      transition: border-color 0.3s ease;
+    }
 
-    {{>header}}
+    .input-field::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
 
-    <div class="full-page">
+    .input-field:focus {
+      border-bottom: 2px solid #F3C693;
+      outline: none;
+    }
 
-      <div id="login-form" class="login-page">
+    .submit-btn {
+      padding: 0.8rem;
+      background: #F3C693;
+      border: none;
+      border-radius: 2rem;
+      font-weight: 600;
+      color: #000;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
 
-        <div class="form-box">
+    .submit-btn:hover {
+      background: #f5b96d;
+    }
 
-          <div class="button-box">
+    @media (max-width: 600px) {
+      .form-box {
+        padding: 2rem 1.5rem;
+      }
 
-            <div id="btn"></div>
+      .toggle-btn {
+        font-size: 0.9rem;
+      }
 
-            <button type="button" 
-                onclick="login()" 
-                class="toggle-btn"
-                id='adminbtn'
-                style='color:black;'
-                >Register<br/>As User
-            </button>
-            
-            <button type="button"
-              onclick="register()"
-              class="toggle-btn"
-              id='userbtn'
-            >Register<br />As Admin
-        </button>
-  
-        </div>
-  
-        <form
-            id="login"
-            class="input-group-login"
-            action="/registration"
-            method="post"
-          >
-  
-            <input type="text" class="input-field" placeholder="Enter Firstname" name="fname">
-            <input type="text" class="input-field" placeholder="Enter Lastname" name="lname">
-            <input type="number" class="input-field" placeholder="Enter Age" name="age">
-            <input type="email" class="input-field" placeholder="Enter Email" name="email">
-            <input type="number" class="input-field" placeholder="Enter Phone NO" name="phone">
-            <input type="text" class="input-field" placeholder="Enter Registration No" name="registrationNo">
-            <input type="number" class="input-field" placeholder="Enter Student Id" name="StudentId">
-            <input type="text" class="input-field" placeholder="Enter Department" name="Department">
-            <input type="text" class="input-field" placeholder="Enter Degree" name="Degree">
-            <input type="password" class="input-field" placeholder="Enter Password" name="password">
-            <input type="password" class="input-field" placeholder="Confirm Password" name="cpassword">
+      .submit-btn {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  {{>header}}
 
-
-            <input type="submit" class="submit-btn" value="Register" />
-  
-            </form>
-
-  
-            <form 
-            id="register" 
-            class="input-group-register"
-            action="/registeradmin"
-            method="post">
-
-            <input type="text" class="input-field" placeholder="Enter Firstname" name="fnamead">
-            <input type="text" class="input-field" placeholder="Enter Lastname" name="lnamead">
-            <input type="number" class="input-field" placeholder="Enter Age" name="agead">
-            <input type="email" class="input-field" placeholder="Enter Email" name="emailad">
-            <input type="number" class="input-field" placeholder="Enter Phone NO" name="phonead">
-            <input type="password" class="input-field" placeholder="Enter Password" name="passwordad">
-            <input type="password" class="input-field" placeholder="Confirm Password" name="cpasswordad">
-
-
-            <input type="submit" class="submit-btn" value="Register" />
-  
-        </form>
-  
+  <div class="form-box">
+    <div class="button-box">
+      <div id="btn"></div>
+      <button type="button" class="toggle-btn" onclick="showLogin()" id="adminbtn">Register as User</button>
+      <button type="button" class="toggle-btn" onclick="showRegister()" id="userbtn">Register as Admin</button>
     </div>
-  
-</div>
 
-</div>
+    <!-- User Registration -->
+    <form id="login" class="active" action="/registration" method="post">
+      <input type="text" class="input-field" placeholder="First Name" name="fname">
+      <input type="text" class="input-field" placeholder="Last Name" name="lname">
+      <input type="number" class="input-field" placeholder="Age" name="age">
+      <input type="email" class="input-field" placeholder="Email" name="email">
+      <input type="number" class="input-field" placeholder="Phone Number" name="phone">
+      <input type="text" class="input-field" placeholder="Registration No" name="registrationNo">
+      <input type="number" class="input-field" placeholder="Student ID" name="StudentId">
+      <input type="text" class="input-field" placeholder="Department" name="Department">
+      <input type="text" class="input-field" placeholder="Degree" name="Degree">
+      <input type="password" class="input-field" placeholder="Password" name="password">
+      <input type="password" class="input-field" placeholder="Confirm Password" name="cpassword">
+      <input type="submit" class="submit-btn" value="Register">
+    </form>
 
-<script>
-    var a=document.getElementById('adminbtn');
-    var b=document.getElementById('userbtn');
+    <!-- Admin Registration -->
+    <form id="register" action="/registeradmin" method="post">
+      <input type="text" class="input-field" placeholder="First Name" name="fnamead">
+      <input type="text" class="input-field" placeholder="Last Name" name="lnamead">
+      <input type="number" class="input-field" placeholder="Age" name="agead">
+      <input type="email" class="input-field" placeholder="Email" name="emailad">
+      <input type="number" class="input-field" placeholder="Phone Number" name="phonead">
+      <input type="password" class="input-field" placeholder="Password" name="passwordad">
+      <input type="password" class="input-field" placeholder="Confirm Password" name="cpasswordad">
+      <input type="submit" class="submit-btn" value="Register">
+    </form>
+  </div>
 
-    var x=document.getElementById('login'); 
-    
-    var y=document.getElementById('register'); 
-    
-    var z=document.getElementById('btn'); 
-    
-    function register() {
+  <script>
+    const loginForm = document.getElementById("login");
+    const registerForm = document.getElementById("register");
+    const btn = document.getElementById("btn");
+    const adminBtn = document.getElementById("adminbtn");
+    const userBtn = document.getElementById("userbtn");
 
-        b.style.color='black';
-        a.style.color='white';
+    function showLogin() {
+      loginForm.classList.add("active");
+      registerForm.classList.remove("active");
+      btn.style.left = "0%";
+      adminBtn.style.color = "#000";
+      userBtn.style.color = "white";
+    }
 
-        x.style.left='-35vw'; 
-    
-        y.style.left='3.5vw'; 
+    function showRegister() {
+      loginForm.classList.remove("active");
+      registerForm.classList.add("active");
+      btn.style.left = "50%";
+      userBtn.style.color = "#000";
+      adminBtn.style.color = "white";
+    }
 
-        z.style.left='9.3vw'; 
-}
-    
-    function login() { 
-      b.style.color='white';
-      a.style.color='black';
-        
-        x.style.left='3.5vw'; 
-    
-        y.style.left='40vw';
-    
-        z.style.left='0px'
-}
-    
-</script>
-
-  </body>
+    // Show user form by default
+    showLogin();
+  </script>
+</body>
 </html>

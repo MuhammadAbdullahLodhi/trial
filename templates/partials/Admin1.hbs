@@ -1,118 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Modern NavBar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
-    body{
-      background-image: url(./css/image/libpic2.jpg);
-  background-attachment: fixed;
-  background-size: cover;
-  background-repeat: no-repeat;
-  backdrop-filter: brightness(40%);
+
+    .NavBar {
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      padding: 0.5rem 1rem;
     }
-    .NavBar{
-    background-color: rgba(0,0,0,0.7);
-    padding: 0vw;
-    margin: 0%;
-    width: 100%;
-    position: fixed;
-    top: 0%;
-    z-index: 100;
-    backdrop-filter: blur(3px);
-}
-.ItemsUL{
-    margin-left: 2vw;
-}
-.itemsli{
-    margin-left: 1.5vw;
-}
-.itemsli>a{
-    color: antiquewhite;
-}
-.itemsli>a:focus, .itemsli>a:hover{
-    color: aqua;
-}
-.logo{
-    width: 17vw;
-    height: 6vw;
-    padding: 0;
-    margin: 0;
-    border-radius: 10px;
-}
-.searchbar{
-    margin-left: 10vw;
-}
 
+    .navbar-brand img.logo {
+      width: 150px;
+      height: auto;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+    }
 
+    .navbar-brand img.logo:hover {
+      transform: scale(1.05);
+    }
 
-</style>
+    .navbar-nav .nav-link {
+      color: #ffffffd9;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+    }
+
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link:focus {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #00e5ff;
+    }
+
+    .navbar-nav .dropdown-menu {
+      background-color: #1c1c1c;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+    }
+
+    .navbar-nav .dropdown-item {
+      color: #eee;
+      border-radius: 5px;
+      padding: 0.5rem 1rem;
+    }
+
+    .navbar-nav .dropdown-item:hover {
+      background-color: #00bcd4;
+      color: white;
+    }
+
+    .form-control {
+      border-radius: 8px;
+    }
+
+    .btn-outline-success {
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-outline-success:hover {
+      background-color: #00e5ff;
+      color: black;
+      border-color: #00e5ff;
+    }
+
+    .searchbar {
+      margin-left: auto;
+    }
+
+    @media (max-width: 992px) {
+      .searchbar {
+        margin: 1rem 0 0 0;
+        width: 100%;
+      }
+
+      .navbar-nav {
+        margin-top: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-
-  <nav class="navbar navbar-expand-lg NavBar">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"><img class="logo" src="./css/image/logoo.jpg" alt=""></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ItemsUL" >
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="/Admin">Home</a>
-          </li>
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="/ShowBooks">All Books</a>
-          </li>
-          <li class="nav-item dropdown itemsli" >
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Modify
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="/AddBook">Add Book</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/delete">Delete Book</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="/update">Update Book</a></li>
-            </ul>
-          </li>
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="/showuser">Approve Users</a>
-          </li>
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="BookAllocate">Book Allocate</a>
-          </li>
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="#">Contact Us</a>
-          </li>
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="/AllStudents">All Students</a>
-          </li>
-          <li class="nav-item itemsli">
-            <a class="nav-link" href="/allAllocatedBooks">All Allocated Books</a>
-          </li>
-        </ul>
-        <form class="d-flex searchbar" role="search" action="/search" method="get">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-          <input class="btn btn-outline-success" type="submit" value="Search" name="search" >
-        </form>
-      </div>
+<nav class="navbar navbar-expand-lg NavBar fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"><img class="logo" src="./css/image/logoo.jpg" alt="Logo"></a>
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/Admin">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="/ShowBooks">Books</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Modify</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/AddBook">Add Book</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/delete">Delete Book</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="/update">Update Book</a></li>
+          </ul>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="/showuser">Approve</a></li>
+        <li class="nav-item"><a class="nav-link" href="/BookAllocate">Allocate</a></li>
+        <li class="nav-item"><a class="nav-link" href="/AllStd">Students</a></li>
+        <li class="nav-item"><a class="nav-link" href="/allAllocatedBooks">Allocated Books</a></li>
+      </ul>
+      <form class="d-flex searchbar" action="/search" method="get" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
-  </nav>
-
-
-  <div class="main">
-
   </div>
+</nav>
 
-
-
-
-
-  
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-<script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </html>

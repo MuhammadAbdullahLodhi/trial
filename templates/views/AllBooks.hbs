@@ -4,137 +4,99 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Display User Data</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.css">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    .Books{
+      font-size: 3vw;
+      font-family: 'Poppins', sans-serif;
+      margin: 0vw 0vw 2vw 1vw;
     }
-
-    body {
-      background-color: #f0f0f0;
-    }
-
-    .main {
-      margin-top: 6.4vw;
-      padding: 2vw;
-      width: 100%;
-    }
-
-    .gridBox {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2vw;
-    }
-
-    .gridBox div {
-      border-radius: 10px;
-      background-color: rgba(0, 0, 0, 0.85);
-      padding: 1vw;
-      color: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .gridBox div:hover {
-      transform: translateY(-5px);
-    }
-
-    .gridBox img {
-      width: 100%;
-      height: auto;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      margin-bottom: 1vw;
-    }
-
-    .gridBox b {
-      display: block;
-      font-weight: 600;
-      color: #00e0ff;
-      margin-top: 0.5vw;
-    }
-
-    .gridBox h1 {
-      font-size: 1rem;
-      font-weight: 500;
-      margin: 0.3vw 0 0.6vw 0;
-      color: white;
-    }
-
-    .gridBox a {
-      display: inline-block;
-      margin-top: 0.8vw;
-      background-color: #00c6ff;
-      color: white;
-      text-decoration: none;
-      padding: 0.4vw 0.8vw;
-      border-radius: 6px;
-      transition: background-color 0.3s ease;
-      font-size: 0.95rem;
-    }
-
-    .gridBox a:hover {
-      background-color: #0099cc;
-    }
-
-    @media screen and (max-width: 768px) {
-      .gridBox h1, .gridBox b {
-        font-size: 0.9rem;
+    .main{
+      width: 96vw;
+      position: absolute;
+      margin:3vw 0vw 0vw 1.5vw;
+      table{
+        border:1px solid black;
+        text-align: left;
+        td,th{
+          font-size: 1vw;
+          border: 1px solid black;
+        }
+        th:hover{
+          cursor: pointer;
+        }
       }
+      img{
+          width: 5vw;
+          height: 5vw;
+        }
 
-      .gridBox a {
-        padding: 0.5vw 1vw;
-        font-size: 0.9rem;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
-      .main {
-        margin-top: 10vw;
-        padding: 5vw;
-      }
-
-      .gridBox {
-        grid-template-columns: 1fr;
-        gap: 4vw;
-      }
-
-      .gridBox h1, .gridBox b {
-        font-size: 1rem;
-      }
-    }
-  </style>
+     
+  }
+        
+  #download{
+    background-color:rgb(84, 117, 215);
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+  }
+    </style>
 </head>
 <body>
 
 {{>Admin1}}
 
+
+
 <div class="main">
-  <div class="gridBox">
-    {{#each books}}
-    <div>
-      {{#if image}}
-        <img src="{{this.image}}" alt="Book Image" />
+
+    
+            <table id="example" class="table table-striped">
+              <thead>
+              <tr>
+                <th>Book Name</th>
+                <th>Image</th>
+                <th style="text-align: left;">ISBN</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>PDF</th>
+                </tr>
+              </thead>
+              <h1 class="Books">All Books</h1>
+                {{#each books}}
+                <tr>
+                  
+                  <td style=" padding-top:1.7vw;">{{this.Bookname}}</td>
+                  <td>{{#if image}}
+        <img id="img" src="{{this.image}}" />
       {{else}}
-        <p>No image available</p>
-      {{/if}}
-
-      <b>Title:</b> <h1>{{this.Bookname}}</h1>
-      <b>ISBN:</b> <h1>{{this.ISBN}}</h1>
-      <b>Author:</b> <h1>{{this.Author}}</h1>
-      <b>Publisher:</b> <h1>{{this.Publisher}}</h1>
-      <b>Location:</b> <h1>{{this.Location}}</h1>
-      <b>Description:</b> <h1>{{this.Description}}</h1>
-
-      {{#if this.pdf}}
-        <a href="{{this.pdf}}" download="{{this.Bookname}}.pdf">Download PDF</a>
-      {{/if}}
-    </div>
-    {{/each}}
-  </div>
-</div>
-
+        <p style=" padding-top:1.7vw;">No image available</p>
+      {{/if}}</td>
+                  <td style="text-align: left; padding-top:1.7vw;">{{this.ISBN}}</td>
+                  <td style=" padding-top:1.7vw;">{{this.Author}}</td>
+                  <td style=" padding-top:1.7vw;">{{this.Publisher}}</td>
+                  <td style=" padding-top:1vw;">{{#if this.pdf}}
+        <a href="{{this.pdf}}" download="{{this.Bookname}}.pdf" id="download">Download PDF</a>
+        {{else}}
+        <p style=" padding-top:1.2vw;">No PDF available</p>
+      {{/if}}</td>
+                </tr>
+                
+                {{/each}}
+            </table>
+          </div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.bootstrap5.js"></script>
+    
+<script>new DataTable('#example');</script>
 </body>
 </html>

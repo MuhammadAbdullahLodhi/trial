@@ -1,71 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approve User</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Borrowed Books - Admin</title>
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+  <!-- DataTables Bootstrap 5 + Responsive Extension -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
+
   <style>
-    .main{
-      width: 96vw;
-      position: absolute;
-      margin:9.4vw 0vw 0vw 3.5vw;
+    body {
+      background-color: #f4f6f9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .page-header {
+      padding: 8rem 1rem 1rem 1rem;
+      background: #0d6efd;
       color: white;
-      text-shadow: 1px 1px 1px black;
+      text-align: center;
+    }
 
-      table{
-        width: 93%;
-        background-color: rgba(0, 0, 0, 0.8);
-        border-collapse: collapse;
-        border-spacing: 0;
-        text-algn: center;
-        border:1px solid white;
-        
-        th{
-          width:fit-content;
-          font-size: 1.3vw;
-          text-align: center;
-          border-bottom:.5px solid White;
-        }
-        td{
-          font-size: 1.1vw;
-          text-align: center;
-          padding: 1vw 0vw;
-        }
-      }
-  }
-  
-</style>
+    .main {
+      padding: 2rem;
+    }
 
+    .table-container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    table.dataTable thead {
+      background-color: #e9ecef;
+    }
+
+    .dataTables_wrapper .dataTables_filter input,
+    .dataTables_wrapper .dataTables_length select {
+      border-radius: 5px;
+    }
+
+    .table-striped>tbody>tr:nth-of-type(odd)>* {
+      background-color: #f8f9fa;
+    }
+
+    h2 {
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
-    {{>sidebar}}
+  {{>sidebar}}
 
-          <div class="main">
+  <div class="page-header">
+    <h2>Borrowed Books</h2>
+    <p class="mb-0">Track issued books and calculate penalties</p>
+  </div>
 
-    
-            <table>
-              <tr>
-                <th>Book Name</th>
-                <th>ISBN</th>
-                <th>Author</th>
-                <th>Issue Date</th>
-                <th>Return Date</th>
-                <th>Fine for Late</th>
-                <th>Days Late</th>
-                </tr>
-                {{#each Borrowbook}}
-                <tr>
-                  <td id="h">{{this.Bookname}}</td>
-                  <td>{{this.ISBN}}</td>
-                  <td>{{this.Author}}</td>
-                  <td>{{this.IssueDate}}</td>
-                  <td>{{this.ReturnDate}}</td>
-                  <td>{{this.FineForLate}}</td>
-                  <td>{{this.lateDays}}</td>
-                </tr>
-                {{/each}}
-            </table>
-          </div>
+  <div class="container-fluid main">
+    <div class="table-container">
+      <div class="table-responsive">
+        <table id="borrowedTable" class="table table-striped table-bordered nowrap" style="width:100%">
+          <thead>
+            <tr>
+              <th>Book Name</th>
+              <th>ISBN</th>
+              <th>Author</th>
+              <th>Issue Date</th>
+              <th>Return Date</th>
+              <th>Fine for Late</th>
+              <th>Days Late</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each Borrowbook}}
+            <tr>
+              <td>{{this.Bookname}}</td>
+              <td>{{this.ISBN}}</td>
+              <td>{{this.Author}}</td>
+              <td>{{this.IssueDate}}</td>
+              <td>{{this.ReturnDate}}</td>
+              <td>{{this.FineForLate}}</td>
+              <td>{{this.lateDays}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- Responsive extension -->
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+  <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
+  <script>
+    new DataTable('#borrowedTable', {
+      responsive: true
+    });
+  </script>
 </body>
 </html>

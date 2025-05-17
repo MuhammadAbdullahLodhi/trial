@@ -29,10 +29,6 @@ const BookAllocateSchema = new mongoose.Schema
         type : String,
         required : true
     },
-    Semester : {
-        type : Number,
-        required : true
-    },
     Department : {
         type : String,
         required : true

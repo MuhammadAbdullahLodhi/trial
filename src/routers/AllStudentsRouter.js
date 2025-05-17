@@ -17,7 +17,7 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 
-router.get("/AllStd", async (req, res) => {
+router.get("/AllStd", authadmin, async (req, res) => {
     try {
   
       const std = await Library.find();

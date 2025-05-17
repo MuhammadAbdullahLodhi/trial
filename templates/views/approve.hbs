@@ -1,98 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Approve User</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Approve User</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-    .main{
-      width: 96vw;
-      position: absolute;
-      margin:9.4vw 0vw 0vw 3.5vw;
+    body {
+      background-color: #eef2f7;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color:rgb(255, 255, 255);
+      background-color: #0d6efd;
+      padding: 8vw 0vw 10vw 0vw;
+      text-align: center;
+    }
+
+    .main {
+      padding: 2rem;
+    }
+
+    .table-container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 25px rgba(0,0,0,0.06);
+      overflow-x: auto;
+    }
+
+    .table th {
+      background-color: #0d6efd;
       color: white;
-      text-shadow: 1px 1px 1px black;
+      vertical-align: middle;
+    }
 
-      table{
-        width: 93%;
-        background-color: rgba(0, 0, 0, 0.8);
-        border-collapse: collapse;
-        border-spacing: 0;
-        text-algn: center;
-        border:1px solid white;
-        
-        th{
-          width:fit-content;
-          font-size: 1.3vw;
-          text-align: center;
-          border-bottom:.5px solid White;
-        }
-        td{
-          font-size: 1.1vw;
-          text-align: center;
-          padding: 1vw 0vw;
-        }
+    .table td {
+      vertical-align: middle;
+    }
+
+    .divBtn {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .divBtn .btn {
+      padding: 0.4rem 0.9rem;
+      border-radius: 5px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .btn-approve {
+      background-color: #28a745;
+      color: #fff;
+    }
+
+    .btn-reject {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .btn-approve i,
+    .btn-reject i {
+      margin-right: 5px;
+      background-color: Green;
+    }
+
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2rem;
+        text-align: center;
+        margin-left: 0;
       }
-  }
-  
-</style>
-<script>
-  async function sendH1Value(registrationNo) {
+
+      .divBtn {
+        flex-direction: column;
+      }
+
+      .divBtn .btn {
+        width: 100%;
+      }
+    }
+  </style>
+
+  <script>
+    async function sendH1Value(registrationNo) {
       try {
-          const response = await fetch('/approveds', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ registrationNo }), // ← make sure this is what your backend expects
-          });
+        const response = await fetch('/approveds', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ registrationNo }),
+        });
 
-          if (!response.ok) throw new Error('Failed to send');
+        if (!response.ok) throw new Error('Failed to send');
 
-          const data = await response.json();
-          console.log('Server Response:', data);
-          alert("User approved successfully!"); // Optional
+        const data = await response.json();
+        console.log('Server Response:', data);
+        alert("User approved successfully!");
       } catch (error) {
-          console.error('Error sending data:', error);
-          alert("Something went wrong");
+        console.error('Error sending data:', error);
+        alert("Something went wrong");
       }
-  }
-</script>
-
+    }
+  </script>
 </head>
 <body>
 
-    {{>Admin1}}
+  {{>Admin1}}
 
-          <div class="main">
+  <h1 class="title">Approve Users</h1>
 
-    
-            <table>
-              <tr>
-                <th>Registration No</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Student ID</th>
-                <th>Semester</th>
-                <th>Degree</th>
-                <th>Status</th>
-                </tr>
-                {{#each approveuser}}
-<tr>
-  <td>{{this.registrationNo}}</td>
-  <td>{{this.firstname}} {{this.lastname}}</td>
-  <td>{{this.email}}</td>
-  <td>{{this.StudentId}}</td>
-  <td>{{this.Semester}}</td>
-  <td>{{this.Degree}}</td>
-  <td>
-    <div class="divBtn">
-      <button class="btn1" style="background-color: green;" onclick="sendH1Value('{{this.registrationNo}}')">Approved</button>
-      <button class="btn2" style="background-color: red;">Reject</button>
+  <div class="container-fluid main">
+    <div class="table-container">
+      <table id="example" class="table table-striped table-bordered table-hover w-100">
+        <thead>
+          <tr>
+            <th>Registration No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Student ID</th>
+            <th>Semester</th>
+            <th>Degree</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each approveuser}}
+          <tr>
+            <td>{{this.registrationNo}}</td>
+            <td>{{this.firstname}} {{this.lastname}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.StudentId}}</td>
+            <td>{{this.Semester}}</td>
+            <td>{{this.Degree}}</td>
+            <td>
+              <div class="divBtn">
+      <button class="btn1" style="background-color: green; border:none; color:white;" onclick="sendH1Value('{{this.registrationNo}}')">Approved</button>
+      <button class="btn2" style="background-color: red; border:none; color:white;">Reject</button>
     </div>
-  </td>
-</tr>
-{{/each}}
-            </table>
-          </div>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.bootstrap5.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new DataTable('#example');
+    });
+  </script>
 </body>
 </html>

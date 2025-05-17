@@ -3,6 +3,8 @@ const router = new express.Router();
 const BookAllocate = require("../models/bookAllocate");
 const auth = require("../middleware/auth");
 const authAdmin = require("../middleware/authAdmin");
+const AddBook = require("../models/AddModel");
+const Library = require("../models/library");
 
 router.use(express.urlencoded({ extended: true }));
 
@@ -16,16 +18,21 @@ router.post("/BookAllocate", authAdmin, async (req, res) => {
   const rdate = req.body.ReturnDate.toString();
   const retSlicedDate = rdate.slice(0, 10);
   try {
+
+    const isbne = req.body.isbn;
+    const book = await AddBook.findOne({ ISBN: isbne });
+    const regNo = req.body.registrationNo;
+    const student = await Library.findOne({ registrationNo: regNo });
     const Allocate = new BookAllocate({
-      Bookname: req.body.BkName,
-      ISBN: req.body.isbn,
-      Author: req.body.Author,
-      StudentName: req.body.StdName,
-      StudentID: req.body.StdID,
-      RegistrationNo: req.body.registrationNo,
-      Semester: req.body.Semester,
-      Department: req.body.Department,
-      Degree: req.body.Degree,
+
+      Bookname: book.Bookname,
+      ISBN: book.ISBN,
+      Author: book.Author,
+      StudentName: student.firstname,
+      StudentID: student.StudentId,
+      RegistrationNo: student.registrationNo,
+      Department: student.Department,
+      Degree: student.Degree,
       IssueDate: SlicedDate,
       ReturnDate: retSlicedDate,
     });
