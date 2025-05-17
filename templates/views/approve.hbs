@@ -7,19 +7,28 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
     body {
-      background-color: #eef2f7;
+      background: linear-gradient(to right, #dbeafe, #e0f2fe);
       font-family: 'Segoe UI', sans-serif;
     }
 
     .title {
       font-size: 2.5rem;
       font-weight: 600;
-      color:rgb(255, 255, 255);
+      color: #ffffff;
       background-color: #0d6efd;
-      padding: 8vw 0vw 10vw 0vw;
+      padding: 8rem 1rem 2rem;
       text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2rem;
+        padding-top: 7rem;
+        padding-bottom: 1.5rem;
+      }
     }
 
     .main {
@@ -30,7 +39,7 @@
       background: #ffffff;
       padding: 2rem;
       border-radius: 12px;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.06);
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
       overflow-x: auto;
     }
 
@@ -49,41 +58,32 @@
       gap: 0.5rem;
     }
 
-    .divBtn .btn {
+    .btn-approve,
+    .btn-reject {
       padding: 0.4rem 0.9rem;
-      border-radius: 5px;
       font-size: 0.875rem;
       font-weight: 500;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      width: 100px;
     }
 
     .btn-approve {
       background-color: #28a745;
-      color: #fff;
     }
 
     .btn-reject {
       background-color: #dc3545;
-      color: #fff;
-    }
-
-    .btn-approve i,
-    .btn-reject i {
-      margin-right: 5px;
-      background-color: Green;
     }
 
     @media (max-width: 768px) {
-      .title {
-        font-size: 2rem;
-        text-align: center;
-        margin-left: 0;
-      }
-
       .divBtn {
         flex-direction: column;
       }
 
-      .divBtn .btn {
+      .btn-approve,
+      .btn-reject {
         width: 100%;
       }
     }
@@ -101,7 +101,6 @@
         });
 
         if (!response.ok) throw new Error('Failed to send');
-
         const data = await response.json();
         console.log('Server Response:', data);
         alert("User approved successfully!");
@@ -143,9 +142,13 @@
             <td>{{this.Degree}}</td>
             <td>
               <div class="divBtn">
-      <button class="btn1" style="background-color: green; border:none; color:white;" onclick="sendH1Value('{{this.registrationNo}}')">Approved</button>
-      <button class="btn2" style="background-color: red; border:none; color:white;">Reject</button>
-    </div>
+                <button class="btn-approve" onclick="sendH1Value('{{this.registrationNo}}')">
+                  <i class="fas fa-check"></i> Approve
+                </button>
+                <button class="btn-reject">
+                  <i class="fas fa-times"></i> Reject
+                </button>
+              </div>
             </td>
           </tr>
           {{/each}}

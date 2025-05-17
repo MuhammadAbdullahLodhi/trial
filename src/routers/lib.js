@@ -34,16 +34,13 @@ router.post("/registration", async (req, res) => {
         createdAt: Date.now,
       });
 
-      // console.log("the success part" + registerUser);
       const token = await registerUser.generateAuthToken();
-      // console.log("the token" + token);
 
       res.cookie("jwt", token, {
         httpOnly: true,
       });
 
       const registered = await registerUser.save();
-      // console.log("the page part" + registered);
 
       res.status(201).render("index");
     } else {
@@ -56,7 +53,7 @@ router.post("/registration", async (req, res) => {
 
 //This is Login Method
 
-const cookieParser = require("cookie-parser"); // add this at the top
+const cookieParser = require("cookie-parser"); 
 router.use(cookieParser());
 
 router.post("/User", async (req, res) => {

@@ -60,6 +60,7 @@ router.get("/BKAllocateUser", async (req, res) => {
   }
 });
 
+// All Allocated Books page route
 router.get("/allAllocatedBooks", authAdmin, async (req, res) => {
   try {
     const allocatedBooks = await BookAllocate.find();

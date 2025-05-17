@@ -143,16 +143,7 @@ router.get("/ShowBooks", async (req, res) => {
   }
 });
 
-// show all books route
-// router.get('/ShowBooks', authadmin, async (req,res) => {
-//     try{
-//         const allbooks = await AddBook.find();
-//         res.status(200).render("AllBooks", { allbooks });
-//     }
-//     catch (err) {
-//         res.status(500).send("Error fetching data");
-//     }
-// })
+// AllBook Route
 router.get("/AllBook", async (req, res) => {
   try {
     const books = await AddBook.find();

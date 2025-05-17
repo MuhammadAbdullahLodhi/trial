@@ -1,7 +1,7 @@
 
 .welcome {
     position: relative;
-    top: 15vw;
+    top: 18vw;
     left: 18vw;
     text-align: center;
     font-size: 2.9vw;
@@ -15,7 +15,7 @@
 
 .para {
     position: relative;
-    top: 16vw;
+    top: 19vw;
     left: 18vw;
     text-align: center;
     font-size: 1.3vw;
@@ -27,7 +27,7 @@
 .features {
     position: absolute;
       padding: 60px 20px;
-      margin-top: 50vw;
+      margin-top: 45vw;
       width: 100%;
     }
     .feature-card {
@@ -45,11 +45,50 @@
       color: #0d6efd;
     }
     .footer {
-        position:absolute;
-        margin-top:80vw ;
+        position:fixed;
+        bottom:0vw;
+        left: 0vw;
         width: 100%;
       background-color: #0d6efd;
       color: white;
       padding: 30px 0;
       text-align: center;
     }
+
+    @media (max-width: 768px) {
+
+    .carouselSlider{
+      margin-top: 15vw;
+    }
+    .welcome {
+    margin-top: 15vw;
+}
+.features {
+      margin-top: 60vw;
+    }
+  }
+
+  @media (max-width: 580px) {
+
+    .carouselSlider{
+      margin-top: 21vw;
+    }
+    .welcome {
+    margin-top: 25vw;
+}
+.features {
+      margin-top: 67vw;
+    }
+  }
+  @media (max-width: 440px) {
+
+    .carouselSlider{
+      margin-top: 29vw;
+    }
+    .welcome {
+    margin-top: 30vw;
+}
+.features {
+      margin-top: 72vw;
+    }
+  }
