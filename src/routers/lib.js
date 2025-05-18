@@ -65,16 +65,13 @@ router.post("/User", async (req, res) => {
     const isMatch = await bcrypt.compare(password, useremail.password);
 
     if (isMatch) {
-      if (useremail.isApproved == true) {
-        // Set registrationNo in cookie
-        res.cookie("regNo", useremail.registrationNo, {
-          httpOnly: true
-        });
-        res.render("User");
-      } else {
-        res.send("Your account is not approved by admin");
-      }
-    } else {
+  if (useremail.isApproved === true) {
+    res.cookie("regNo", useremail.registrationNo, { httpOnly: true });
+    res.render("User");
+  } else {
+    res.render("login", { error: "Your account is not approved by admin" });
+  }
+} else {
       res.render("login", { showModal: true, message: "Password not correct" });
     }
   } catch (error) {

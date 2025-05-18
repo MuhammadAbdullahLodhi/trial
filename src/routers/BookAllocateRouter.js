@@ -70,6 +70,21 @@ router.get("/allAllocatedBooks", authAdmin, async (req, res) => {
   }
 });
 
+// ReturnBook route
+router.get("/return/:regNo/:isbn", async (req, res) => {
+  try {
+    const regNo = req.params.regNo;
+    const isbn = req.params.isbn;
+
+    // Delete user by registration number
+    const deleteAllocatedBook = await BookAllocate.findOneAndDelete({ RegistrationNo: regNo , ISBN: isbn });
+
+    res.render("AllAllocatedBooks");
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).send("Error deleting user");
+  }
+});
 
 // const users = await User.find();
 

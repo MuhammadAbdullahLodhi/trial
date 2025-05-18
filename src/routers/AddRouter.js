@@ -53,7 +53,7 @@ router.post("/upload", authadmin, upload.fields([
     });
 
     const added = await Insert.save();
-    res.status(201).render("AddBook");
+    res.status(201).render("#");
   } catch (err) {
     res.status(400).send(err);
   }
@@ -138,6 +138,39 @@ router.get("/ShowBooks", async (req, res) => {
     });
 
     res.render("AllBooks", { books: booksWithImages });
+  } catch (err) {
+    res.status(500).send("Error fetching books: " + err.message);
+  }
+});
+
+// AllBook Route for Super Admin
+router.get("/AllBooksSuper", async (req, res) => {
+  try {
+    const books = await AddBook.find();
+
+    const booksWithImages = books.map((books) => {
+        const imageBase64 = books.image?.data?.toString("base64");
+        const pdfBase64 = books.pdf?.data?.toString("base64");
+      return {
+        _id: books._id,
+        Bookname: books.Bookname,
+        ISBN: books.ISBN,
+        Location: books.Location,
+        Author: books.Author,
+        Publisher: books.Publisher,
+        Price: books.Price,
+        Quantity: books.Quantity,
+        Description: books.Description,
+        image: imageBase64
+            ? `data:${books.image.contentType};base64,${imageBase64}`
+            : null,
+        pdf: pdfBase64
+            ? `data:${books.pdf.contentType};base64,${pdfBase64}`
+            : null
+      };
+    });
+
+    res.render("AllBooksSuper", { books: booksWithImages });
   } catch (err) {
     res.status(500).send("Error fetching books: " + err.message);
   }

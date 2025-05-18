@@ -59,6 +59,9 @@ router.post("/registeradmin", async (req,res) => {
 router.post("/Admin", async (req,res) => {
 
     try {
+        const cookieParser = require("cookie-parser"); 
+        router.use(cookieParser());
+
         const email1 = req.body.emailad;
         const password1 = req.body.passwordad;
         
@@ -67,24 +70,19 @@ router.post("/Admin", async (req,res) => {
         if (Adminemail) {
             const isMatch = await bcrypt.compare(password1, Adminemail.password);
 
-        const token = await Adminemail.generateAuthToken();
-        // console.log("the token part " + token);
+        
 
-        res.cookie("jwtadmin", token, {
-            httpOnly:true
-        })
-
-        if(isMatch){
-            res.render("Admin");
-        }
-        else {
-            res.render("login", { showModal: true, message: "Password not correct" });
-          }
-        }
-        else{
-            res.render("login", { showModal: true, message: "User Not Found" });
-        }
-
+        if (isMatch) {
+  if (Adminemail.isApproved === true) {
+    res.cookie("email", Adminemail.email, { httpOnly: true });
+    res.render("Admin");
+  } else {
+    res.render("login", { error: "Your account is not approved by Superadmin" });
+  }
+} else {
+      res.render("login", { showModal: true, message: "Password not correct" });
+    }
+  } 
             } catch (error) {
 
                 res.send(error);
@@ -96,7 +94,7 @@ router.post("/Admin", async (req,res) => {
 
 //approving by admin route
 router.post('/approveds', authadmin, async (req, res) => {
-    const { registrationNo } = req.body; // <-- Destructure properly
+    const { registrationNo } = req.body; // <-- Also used as "registerationNo = req.body.registerationNo"
   
     try {
       // Update the user to set isApproved to true
@@ -112,8 +110,42 @@ router.post('/approveds', authadmin, async (req, res) => {
       res.status(500).json({ error: 'Error approving user.' });
     }
   });
-  
 
+  // Approve Admin By SuperAdmin
+  router.post('/ApproveAdmin', async (req, res) => {
+    const { email } = req.body; // <-- Also used as "registerationNo = req.body.registerationNo"
+  
+    try {
+      // Update the user to set isApproved to true
+      const approval = await libraryRouter1.updateOne(
+        { email: email },
+        { $set: { isApproved: true } }
+      );
+  
+      // You can choose to send a response back to the frontend
+      res.json({ success: true, message: 'User approved successfully', result: approval });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Error approving user.' });
+    }
+  });
+  
+// Reject user
+
+
+router.get("/reject/:regNo", async (req, res) => {
+  try {
+    const regNo = req.params.regNo;
+
+    // Delete user by registration number
+    const deletedUser = await Library.findOneAndDelete({ registrationNo: regNo });
+
+    res.render("approve");
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).send("Error deleting user");
+  }
+});
 
 
 
@@ -122,6 +154,17 @@ router.get('/showuser', authadmin, async (req,res) => {
     try{
         const approveuser = await Library.find({isApproved:false});
         res.status(200).render("approve", { approveuser });
+    }
+    catch (err) {
+        res.status(500).send("Error fetching data");
+    }
+})
+
+//show all Admin route
+router.get('/ApproveAdminBySuper', authadmin, async (req,res) => {
+    try{
+        const approveadmin = await libraryRouter1.find({isApproved:false});
+        res.status(200).render("ApproveAdminBySuper", { approveadmin });
     }
     catch (err) {
         res.status(500).send("Error fetching data");

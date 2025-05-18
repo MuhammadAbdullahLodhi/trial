@@ -90,20 +90,20 @@
   </style>
 
   <script>
-    async function sendH1Value(registrationNo) {
+    async function sendH1Value(email) {
       try {
-        const response = await fetch('/approveds', {
+        const response = await fetch('/ApproveAdmin', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ registrationNo }),
+          body: JSON.stringify({ email }),
         });
 
         if (!response.ok) throw new Error('Failed to send');
         const data = await response.json();
         console.log('Server Response:', data);
-        alert("User approved successfully!");
+        alert("Admin approved successfully!");
       } catch (error) {
         console.error('Error sending data:', error);
         alert("Something went wrong");
@@ -113,40 +113,36 @@
 </head>
 <body>
 
-  {{>Admin1}}
+  {{>SuperAdminNav}}
 
-  <h1 class="title">Approve Users</h1>
+  <h1 class="title">Approve Admins</h1>
 
   <div class="container-fluid main">
     <div class="table-container">
       <table id="example" class="table table-striped table-bordered table-hover w-100">
         <thead>
           <tr>
-            <th>Registration No</th>
             <th>Name</th>
+            <th>Age</th>
             <th>Email</th>
-            <th>Student ID</th>
-            <th>Semester</th>
-            <th>Degree</th>
+            <th>Phone No</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {{#each approveuser}}
+          {{#each approveadmin}}
           <tr>
-            <td>{{this.registrationNo}}</td>
             <td>{{this.firstname}} {{this.lastname}}</td>
+            <td>{{this.age}} </td>
             <td>{{this.email}}</td>
-            <td>{{this.StudentId}}</td>
-            <td>{{this.Semester}}</td>
-            <td>{{this.Degree}}</td>
+            <td>{{this.phone}}</td>
             <td>
               <div class="divBtn">
-                <button class="btn-approve" onclick="sendH1Value('{{this.registrationNo}}')">
+                <button class="btn-approve" onclick="sendH1Value('{{this.email}}')">
                   <i class="fas fa-check"></i> Approve
                 </button>
                 <button class="btn-reject">
-                <a href="/reject/{{this.registrationNo}}" style="text-decoration: none; color: white;">
+                <a href="/reject/{{this.email}}" style="text-decoration: none; color: white;">
                   <i class="fas fa-times"></i> Reject
                 </a>
               </button>

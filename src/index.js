@@ -77,8 +77,14 @@ app.get("/Admin", authadmin, (req, res) => {
 app.get("/AddBook", authadmin, (req, res) => {
   res.render("AddBook");
 });
+app.get("/AddBookSuper", (req, res) => {
+  res.render("AddBookSuper");
+});
 app.get("/delete", authadmin, (req, res) => {
   res.render("delete");
+});
+app.get("/deleteSuper", authadmin, (req, res) => {
+  res.render("deleteSuper");
 });
 app.get("/update", authadmin, (req, res) => {
   res.render("update");
@@ -87,12 +93,28 @@ app.get("/update", authadmin, (req, res) => {
 app.get("/BookAllocate", authadmin, (req, res) => {
   res.render("BookAllocate");
 });
+app.get("/BookAllocateSuper", (req, res) => {
+  res.render("BookAllocateSuper");
+});
 app.get("/AllBooks", auth, (req, res) => {
   res.render("AllBooks");
 });
-app.get("/AllStudents", authadmin, (req, res) => {
-  res.render("AllStudents");
+app.get("/StudentsSuper", authadmin, (req, res) => {
+  res.render("StudentsSuper");
 });
+app.get("/SuperAdmin",  (req, res) => {
+  res.render("SuperAdminMain");
+});
+app.get("/ApproveSuper",  (req, res) => {
+  res.render("ApproveSuper");
+});
+app.get("/allAllocatedBooksSuper",  (req, res) => {
+  res.render("AllAllocatedBooksSuper");
+});
+app.get("/SuperAdminMain",  (req, res) => {
+  res.render("SuperAdminMain");
+});
+
 
 
 

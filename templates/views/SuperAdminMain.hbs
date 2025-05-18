@@ -64,10 +64,10 @@
   </style>
 </head>
 <body>
-{{>Admin1}}
+{{>SuperAdminNav}}
   
   <header class="header position-relative">
-    <h2>Welcome Admin - Library Management System</h2>
+    <h2>Welcome SuperAdmin - Library Management System</h2>
     <a href="/logout" class="btn btn-outline-light logout-btn">Logout</a>
   </header>
 
@@ -78,7 +78,7 @@
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">📚</div>
           <h5 class="card-title">View Books</h5>
-          <a href="/ShowBooks" class="btn btn-primary mt-3">Go</a>
+          <a href="/AllBooksSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
@@ -86,7 +86,7 @@
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">➕</div>
           <h5 class="card-title">Add Book</h5>
-          <a href="/AddBook" class="btn btn-primary mt-3">Go</a>
+          <a href="/AddBookSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
@@ -94,23 +94,22 @@
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">🗑️</div>
           <h5 class="card-title">Delete Book</h5>
-          <a href="/delete" class="btn btn-primary mt-3">Go</a>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card p-4 text-center">
-          <div class="action-icon mb-3">✏️</div>
-          <h5 class="card-title">Update Book</h5>
-          <a href="/update" class="btn btn-primary mt-3">Go</a>
+          <a href="/deleteSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
       <div class="col-md-4">
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">✅</div>
-          <h5 class="card-title">Approve Users</h5>
-          <a href="/showuser" class="btn btn-primary mt-3">Go</a>
+          <h5 class="card-title">Approve Student</h5>
+          <a href="/ApproveSuper" class="btn btn-primary mt-3">Go</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card p-4 text-center">
+          <div class="action-icon mb-3">✅</div>
+          <h5 class="card-title">Approve Admin</h5>
+          <a href="/ApproveAdminSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
@@ -118,7 +117,7 @@
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">📦</div>
           <h5 class="card-title">Allocate Book</h5>
-          <a href="/BookAllocate" class="btn btn-primary mt-3">Go</a>
+          <a href="/BookAllocateSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
@@ -126,7 +125,7 @@
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">👨‍🎓</div>
           <h5 class="card-title">View Students</h5>
-          <a href="/AllStudents" class="btn btn-primary mt-3">Go</a>
+          <a href="/StudentsSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
@@ -134,7 +133,7 @@
         <div class="card p-4 text-center">
           <div class="action-icon mb-3">📄</div>
           <h5 class="card-title">Allocated Books</h5>
-          <a href="/allAllocatedBooks" class="btn btn-primary mt-3">Go</a>
+          <a href="/allAllocatedBooksSuper" class="btn btn-primary mt-3">Go</a>
         </div>
       </div>
 
